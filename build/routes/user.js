@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const userController_1 = require("../controllers/userController");
 const verifyToken_1 = require("../middleware/verifyToken");
+const verifyTokenProfile_1 = require("../middleware/verifyTokenProfile");
 const router = express_1.default.Router();
 // Ruta para obtener todos los usuarios
 router.get("/", userController_1.getUsers);
@@ -20,5 +21,5 @@ router.delete('/delete/:idUser/:ideliminado', verifyToken_1.TokenValidation, use
 //Ruta per fer login
 router.post("/login", userController_1.login);
 //Ruta per veure el perfil amb token
-router.get("/:id/profile", verifyToken_1.TokenValidation, userController_1.profile);
+router.get("/:id/profile", verifyTokenProfile_1.TokenValidationProfile, userController_1.profile);
 exports.default = router;
