@@ -2,7 +2,7 @@ import express from 'express';
 //import * as userServices from '../services/userServices'
 import { getUsers, createUser, getUser, updateUser, deleteUser, login, profile } from '../controllers/userController';
 import { TokenValidation } from '../middleware/verifyToken';
-import { verifyUserOwnership } from '../middleware/verifyToken';
+//import { verifyUserOwnership } from '../middleware/verifyToken';
 
 
 
@@ -21,7 +21,7 @@ router.get("/:id", getUser);
 router.put("/update/:id", updateUser);
 
 //Ruta per eliminar user per id
-router.delete('/delete/:ideliminador/:ideliminado', TokenValidation, verifyUserOwnership, deleteUser);
+router.delete('/delete/:idUser/:ideliminado', TokenValidation, deleteUser);
 
 //Ruta per fer login
 router.post("/login", login);
