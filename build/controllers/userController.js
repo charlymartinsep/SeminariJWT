@@ -43,14 +43,16 @@ exports.deleteUser = deleteUser;
 exports.login = login;
 exports.profile = profile;
 const userServices = __importStar(require("../services/userServices"));
-//Importem el middleware 
-//import {TokenValidation} from '../middleware/verifyToken'
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 function getUsers(_req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             console.log("Get users");
             const users = yield userServices.getEntries.getAll();
+            // Encriptar las contraseñas de los usuarios antes de devolverlos
+            for (let user of users) {
+                user.password = yield user.encryptPassword(user.password);
+            }
             return res.json(users);
         }
         catch (error) {
@@ -66,6 +68,7 @@ function createUser(req, res) {
             const newUser = { username, name, email, password, isAdmin };
             console.log(newUser);
             const user = yield userServices.getEntries.createUser(newUser);
+            user.password = yield user.encryptPassword(user.password);
             console.log(user);
             //Retornem token al crear un usuari
             const token = jsonwebtoken_1.default.sign({ username: user.username, }, process.env.SECRET || 'tokentest');
@@ -85,6 +88,7 @@ function getUser(req, res) {
             if (!user) {
                 return res.status(404).json({ error: `User with id ${id} not found` });
             }
+            user.password = yield user.encryptPassword(user.password);
             return res.json(user);
         }
         catch (error) {
@@ -103,6 +107,7 @@ function updateUser(req, res) {
             if (!user) {
                 return res.status(404).json({ error: `User with id ${id} not found` });
             }
+            user.password = yield user.encryptPassword(user.password);
             return res.json({
                 message: "User updated",
                 user
@@ -124,6 +129,7 @@ function deleteUser(req, res) {
             if (!user) {
                 return res.status(404).json({ error: `User with id ${id} not found` });
             }
+            user.password = yield user.encryptPassword(user.password);
             // Devuelve una respuesta de éxito
             return res.json({ message: 'User deleted successfully', user });
         }
@@ -148,6 +154,7 @@ function login(req, res) {
         if (password === user.password) { // Compara directamente con la contraseña
             // Crear token
             const token = jsonwebtoken_1.default.sign({ username: username, isAdmin: user.isAdmin }, process.env.SECRET || 'tokentest');
+            user.password = yield user.encryptPassword(user.password);
             return res.json({
                 message: "User logged in",
                 token
@@ -167,6 +174,7 @@ function profile(req, res) {
             if (!user) {
                 return res.status(404).json({ error: `User with id ${id} not found` });
             }
+            user.password = yield user.encryptPassword(user.password);
             // Devuelve los datos del usuario
             return res.json(user);
         }

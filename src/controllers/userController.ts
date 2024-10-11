@@ -2,8 +2,6 @@ import { Request, Response } from "express";
 import { userInterface } from "../modelos/types_d_users";
 import * as userServices from "../services/userServices";
 
-//Importem el middleware 
-//import {TokenValidation} from '../middleware/verifyToken'
 
 import jwt from 'jsonwebtoken'
 
@@ -12,6 +10,10 @@ export async function getUsers(_req: Request, res: Response): Promise<Response> 
    try {
     console.log("Get users");
     const users = await userServices.getEntries.getAll();
+    // Encriptar las contraseñas de los usuarios antes de devolverlos
+    for (let user of users) {
+        user.password = await user.encryptPassword(user.password);
+     }
     return res.json(users);
    } catch (error) {
     return res.status(500).json({ error:'Failes to get users'});
@@ -25,6 +27,7 @@ export async function createUser(req: Request, res: Response): Promise<Response>
         const newUser: Partial<userInterface> = { username, name, email, password, isAdmin };
         console.log(newUser);
         const user = await userServices.getEntries.createUser(newUser);
+        user.password = await user.encryptPassword(user.password);
         console.log(user);
         //Retornem token al crear un usuari
         const token: string = jwt.sign({username: user.username,}, process.env.SECRET || 'tokentest')
@@ -39,10 +42,10 @@ export async function getUser(req: Request, res: Response): Promise<Response> {
         console.log('Get user');
         const id = req.params.id;
         const user = await userServices.getEntries.findById(id);
-
         if(!user) {
             return res.status(404).json({ error: `User with id ${id} not found` });
         }
+        user.password = await user.encryptPassword(user.password);
         return res.json(user);
     } catch (error) {
         return res.status(500).json({ error: 'Failed to get user' });
@@ -60,6 +63,7 @@ export async function updateUser(req: Request, res: Response): Promise<Response>
         if(!user) {
             return res.status(404).json({ error: `User with id ${id} not found` });
         }
+        user.password = await user.encryptPassword(user.password);
         return res.json({
             message: "User updated",
             user
@@ -81,7 +85,7 @@ export async function deleteUser(req: Request, res: Response): Promise<Response>
         if (!user) {
             return res.status(404).json({ error: `User with id ${id} not found` });
         }
-        
+        user.password = await user.encryptPassword(user.password);
         // Devuelve una respuesta de éxito
         return res.json({ message: 'User deleted successfully', user });
     } catch (error) {
@@ -102,11 +106,12 @@ export async function login(req: Request, res: Response): Promise<Response> {
     if (!user) {
         return res.status(404).json({ error: 'User not found' });
     }
+    
     // Comparar la contraseña
     if (password === user.password) { // Compara directamente con la contraseña
         // Crear token
         const token: string = jwt.sign({ username: username, isAdmin : user.isAdmin }, process.env.SECRET || 'tokentest');
-
+        user.password = await user.encryptPassword(user.password);
         return res.json({
             message: "User logged in",
             token
@@ -127,7 +132,7 @@ export async function profile(req: Request, res: Response): Promise<Response> {
         if (!user) {
             return res.status(404).json({ error: `User with id ${id} not found` });
         }
-
+        user.password = await user.encryptPassword(user.password);
         // Devuelve los datos del usuario
         return res.json(user);
     } catch (error) {

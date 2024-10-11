@@ -3,6 +3,9 @@ import cors from 'cors'
 import userRouter from './routes/user'
 import experienciasRouter from './routes/experiencias'
 import { run } from './database/mongo_conn'
+//Variables d'entorn
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app = express()
 app.use(express.json())

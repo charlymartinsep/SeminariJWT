@@ -1,10 +1,6 @@
 import express from 'express';
-//import * as userServices from '../services/userServices'
 import { getUsers, createUser, getUser, updateUser, deleteUser, login, profile } from '../controllers/userController';
 import { TokenValidation } from '../middleware/verifyToken';
-//import { verifyUserOwnership } from '../middleware/verifyToken';
-
-
 
 const router = express.Router();
 
@@ -27,6 +23,6 @@ router.delete('/delete/:idUser/:ideliminado', TokenValidation, deleteUser);
 router.post("/login", login);
 
 //Ruta per veure el perfil amb token
-router.get("/profile/:id", TokenValidation, profile);
+router.get("/:id/profile", TokenValidation, profile);
 
 export default router 
