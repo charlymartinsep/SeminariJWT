@@ -23,7 +23,6 @@ export const verifyOwnership = async (req: Request, res: Response, next: NextFun
         return res.json('no eres propietario');
 
     } catch (error) {
-        // En caso de error, devolvemos una respuesta y detenemos el flujo
-        handleHttp(res, 'Internal server error', error); // Maneja errores inesperados
+        handleHttp(res, 'Internal server error', error); 
     }
 };

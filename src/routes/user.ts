@@ -1,7 +1,5 @@
 import express from 'express';
 import { getUsers, createUser, getUser, updateUser, deleteUser, login, profile } from '../controllers/userController';
-//import { TokenValidation } from '../middleware/verifyToken';
-//import {TokenValidationProfile} from '../middleware/verifyTokenProfile'
 import { TokenValidation} from '../middleware/verifyJWT'
 import { verifyOwnership } from '../middleware/verifyOwner'
 import { AdminValidation} from '../middleware/verifyAdmin'

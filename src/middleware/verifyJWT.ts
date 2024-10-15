@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { handleHttp } from '../utils/error.handle'
-//import {verifyUserOwnership} from './verifyUser'
+
 
 interface IPayload {
     username: string;
@@ -25,6 +25,6 @@ export const TokenValidation = (req: Request, res: Response, next: NextFunction)
         next();
 
     } catch (error) {
-        handleHttp(res, 'Your token is not valid', error); // Centraliza el manejo del error
+        handleHttp(res, 'Your token is not valid', error); 
     }
 };

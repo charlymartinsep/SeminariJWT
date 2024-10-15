@@ -5,8 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const userController_1 = require("../controllers/userController");
-//import { TokenValidation } from '../middleware/verifyToken';
-//import {TokenValidationProfile} from '../middleware/verifyTokenProfile'
 const verifyJWT_1 = require("../middleware/verifyJWT");
 const verifyOwner_1 = require("../middleware/verifyOwner");
 const verifyAdmin_1 = require("../middleware/verifyAdmin");

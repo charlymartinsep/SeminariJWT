@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { userInterface } from "../modelos/types_d_users";
 import * as userServices from "../services/userServices";
-//import { handleHttp } from '../utils/error.handle';
+
 
 import jwt from 'jsonwebtoken'
 
@@ -74,23 +74,6 @@ export async function updateUser(req: Request, res: Response): Promise<Response>
 }
 
 export async function deleteUser(req: Request, res: Response): Promise<Response> {
-    
-   /* try {
-        const userIdToDelete = req.params.idUser; // Assuming you have this in your route
-        const result = await userServices.getEntries.deleteUserById(userIdToDelete); // Your service method
-
-        if (!result) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-
-        // If deletion is successful
-        return res.status(200).json({ message: 'User deleted successfully' });
-
-    } catch (error) { 
-       return handleHttp(res, 'Internal server error', error);
-    }*/
-    
-    
     try {
         console.log('Delete user');
         // Asegúrate de que el nombre del parámetro coincida con lo que has definido en la ruta

@@ -1,13 +1,4 @@
 import { Request, Response, NextFunction } from 'express';
-//import jwt from 'jsonwebtoken';
-//import {verifyUserOwnership} from './verifyUser'
-
-/*interface IPayload {
-    username: string;
-    isAdmin: boolean; // Añade el campo isAdmin al payload
-    iat: number;
-    exp: number;
-}*/
 
 export const AdminValidation = (req: Request, res: Response, next: NextFunction) => {
     console.log('Verifying admin');
