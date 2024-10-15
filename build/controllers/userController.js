@@ -43,6 +43,7 @@ exports.deleteUser = deleteUser;
 exports.login = login;
 exports.profile = profile;
 const userServices = __importStar(require("../services/userServices"));
+//import { handleHttp } from '../utils/error.handle';
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 function getUsers(_req, res) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -120,10 +121,24 @@ function updateUser(req, res) {
 }
 function deleteUser(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
+        /* try {
+             const userIdToDelete = req.params.idUser; // Assuming you have this in your route
+             const result = await userServices.getEntries.deleteUserById(userIdToDelete); // Your service method
+     
+             if (!result) {
+                 return res.status(404).json({ message: 'User not found' });
+             }
+     
+             // If deletion is successful
+             return res.status(200).json({ message: 'User deleted successfully' });
+     
+         } catch (error) {
+            return handleHttp(res, 'Internal server error', error);
+         }*/
         try {
             console.log('Delete user');
             // Asegúrate de que el nombre del parámetro coincida con lo que has definido en la ruta
-            const id = req.params.ideliminado; // Cambié 'idEliminado' a 'ideliminado'
+            const id = req.params.id; // Cambié 'idEliminado' a 'ideliminado'
             // Intenta eliminar el usuario utilizando el servicio
             const user = yield userServices.getEntries.deleteUserById(id);
             if (!user) {
