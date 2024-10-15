@@ -12,7 +12,7 @@
 
 # Commands to execute
 
-Instal·lar jet
+Instal·lar jwt
 - npm install jsonwebtoken 
 - npm install @types/jsonwebtoken -D
 
