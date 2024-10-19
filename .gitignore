@@ -1,5 +1,3 @@
 # Ignorar la carpeta build
 build/
 
-# Ignorar la carpeta node_modules
-node_modules/
