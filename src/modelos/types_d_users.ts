@@ -12,6 +12,7 @@ export interface userInterface {
 }
 
 export type UsersInterfacePublicInfo = Pick<userInterface, 'username' | 'name'>;
+export type PIUser = Pick<userInterface, 'username' | 'isAdmin'>;
 export type newUserInfo = Omit<userInterface, 'id'>;
 
 export const userSchema = new Schema<userInterface>({

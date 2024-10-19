@@ -8,6 +8,9 @@ export const verifyOwnership = async (req: Request, res: Response, next: NextFun
         const userIdToActOn = req.params.id; // ID del usuario objetivo
         const username = req.user?.username; // Verificamos si req.user existe
 
+        if (username==undefined){
+            return res.json('no tienes nombre de usuario');
+        }
         const user = await userServices.getEntries.findByUsername(username);
         const currentUserId = user?.id;
         console.log(user);
