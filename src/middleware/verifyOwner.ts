@@ -6,7 +6,7 @@ export const verifyOwnership = async (req: Request, res: Response, next: NextFun
     try {
         console.log('verficant usuari')
         const userIdToActOn = req.params.id; // ID del usuario objetivo
-        const username = req.user?.username; // Verificamos si req.user existe
+        const username = req.user.username; // Verificamos si req.user existe
 
         const user = await userServices.getEntries.findByUsername(username);
         const currentUserId = user?.id;
